@@ -17404,9 +17404,9 @@ module.exports = class RTCSession extends EventEmitter
    */
   _getDTMFRTPSender()
   {
-    const sender = this._connection.getSenders().find((rtpSender) =>
+    const sender = this._connection.getRemoteStreams().find((rtpSender) =>
     {
-      return rtpSender.track && rtpSender.track.kind === 'audio';
+      return rtpSender && rtpSender.kind === 'audio';
     });
 
     if (!(sender && sender.dtmf))
@@ -18154,14 +18154,14 @@ module.exports = class RTCSession extends EventEmitter
 
   _toggleMuteVideo(mute)
   {
-    const senders = this._connection.getSenders().filter((sender) =>
+    const tracks = this._connection.getRemoteStreams().filter((sender) =>
     {
       return sender && sender.kind === 'video';
     });
 
-    for (const sender of senders)
+    for (const track of tracks)
     {
-      sender.enabled = !mute;
+      track.enabled = !mute;
     }
   }
 
