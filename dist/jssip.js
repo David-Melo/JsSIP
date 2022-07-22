@@ -18141,10 +18141,13 @@ module.exports = class RTCSession extends EventEmitter
 
   _toggleMuteAudio(mute)
   {
-
+    console.log('toggleMute',mute)
     this._connection._localStreams.forEach(stream=>{
+      console.log('gotStream')
       stream._tracks.forEach(track=>{
+          console.log('gotTrack')
           if(track.type==='audio') {
+            console.log('setEnable',!mute)
             track.enabled = !mute
           }
       })
