@@ -18143,6 +18143,16 @@ module.exports = class RTCSession extends EventEmitter
   {
     console.log('toggleMute',mute)
     this._connection._localStreams.forEach(stream=>{
+        console.log('gotStream')
+        stream._tracks.forEach(track=>{
+            console.log('gotTrack')
+            if(track.type==='audio') {
+              console.log('setEnable',!mute)
+              track.enabled = !mute
+            }
+        })
+    })
+    this._connection._remoteStreams.forEach(stream=>{
       console.log('gotStream')
       stream._tracks.forEach(track=>{
           console.log('gotTrack')
@@ -18151,7 +18161,7 @@ module.exports = class RTCSession extends EventEmitter
             track.enabled = !mute
           }
       })
-  })
+    })
 
     // const tracks = this._connection.getRemoteStreams().filter((sender) =>
     // {
